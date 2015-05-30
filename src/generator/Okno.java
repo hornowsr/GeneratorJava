@@ -1,10 +1,14 @@
 package generator;
 
 import static generator.Generacja.Generacja;
+import static generator.OknoPlik.wczytajPlik;
 import static generator.Podział.dodajDane;
-import static generator.Podział.wyswietl;
-import static generator.Statystyka.setSlowo;
-import java.util.ArrayList;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.net.URL;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Okno extends javax.swing.JFrame {
 
@@ -15,7 +19,23 @@ public class Okno extends javax.swing.JFrame {
 
     public Okno() {
         initComponents();
-
+        setSize(450, 350);
+        setVisible(true);
+      //  URL baza = Okno.class.getResource("Podstawa.txt");
+        File plik = new File("Podstawa.txt");
+        try {
+                wczytajPlik(plik);
+                System.out.println("Dodano do bazy.");
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(OknoPlik.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.println("Błąd podczas dodawania do bazy.");
+            } catch (IOException ex) {
+                Logger.getLogger(OknoPlik.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.println("Błąd podczas dodawania do bazy.");
+            }
+        
+        //setLocationRelativeTo(null);
+        setResizable(false);
         setLocationRelativeTo(null);
         wejście.addKeyListener(null);
         wejście.setText(null);
@@ -41,19 +61,25 @@ public class Okno extends javax.swing.JFrame {
         pierwsze = new javax.swing.JLabel();
         drugie = new javax.swing.JLabel();
         trzecie = new javax.swing.JLabel();
-        pierwszelicznik = new javax.swing.JLabel();
         drugielicznik = new javax.swing.JLabel();
         trzecielicznik = new javax.swing.JLabel();
         Ilość = new javax.swing.JLabel();
         Wyślij = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
+        pierwszelicznik = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jPanel1.setLayout(null);
 
         wyjście.setColumns(20);
         wyjście.setRows(5);
         wyjście.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         wyjście.setEnabled(false);
         jScrollPane1.setViewportView(wyjście);
+
+        jPanel1.add(jScrollPane1);
+        jScrollPane1.setBounds(10, 11, 286, 182);
 
         wejście.setColumns(20);
         wejście.setRows(5);
@@ -64,16 +90,35 @@ public class Okno extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(wejście);
 
-        Plik.setText("Plik");
+        jPanel1.add(jScrollPane2);
+        jScrollPane2.setBounds(10, 211, 286, 80);
+
+        Plik.setText("Wczytaj plik");
         Plik.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 PlikActionPerformed(evt);
             }
         });
+        jPanel1.add(Plik);
+        Plik.setBounds(333, 11, 105, 23);
 
         Słowo.setText("Słowo");
+        jPanel1.add(Słowo);
+        Słowo.setBounds(314, 65, 40, 14);
+        jPanel1.add(pierwsze);
+        pierwsze.setBounds(314, 87, 50, 20);
+        jPanel1.add(drugie);
+        drugie.setBounds(314, 115, 60, 20);
+        jPanel1.add(trzecie);
+        trzecie.setBounds(314, 133, 60, 30);
+        jPanel1.add(drugielicznik);
+        drugielicznik.setBounds(393, 115, 40, 20);
+        jPanel1.add(trzecielicznik);
+        trzecielicznik.setBounds(393, 133, 50, 30);
 
         Ilość.setText("Ilość:");
+        jPanel1.add(Ilość);
+        Ilość.setBounds(393, 65, 40, 14);
 
         Wyślij.setText("Wyślij");
         Wyślij.addActionListener(new java.awt.event.ActionListener() {
@@ -81,75 +126,29 @@ public class Okno extends javax.swing.JFrame {
                 WyślijActionPerformed(evt);
             }
         });
+        jPanel1.add(Wyślij);
+        Wyślij.setBounds(314, 230, 80, 40);
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 286, Short.MAX_VALUE)
-                    .addComponent(jScrollPane2))
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(Plik)
-                        .addContainerGap())
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(pierwsze)
-                                    .addComponent(Słowo)
-                                    .addComponent(drugie)
-                                    .addComponent(trzecie))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(pierwszelicznik)
-                                    .addComponent(drugielicznik)
-                                    .addComponent(trzecielicznik)
-                                    .addComponent(Ilość))
-                                .addGap(29, 29, 29))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(Wyślij)
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
+        jPanel2.setBackground(new java.awt.Color(255, 0, 0));
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addGap(0, 80, Short.MAX_VALUE)
+                .addComponent(pierwszelicznik, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(Plik)
-                        .addGap(31, 31, 31)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(Słowo)
-                            .addComponent(Ilość))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(pierwsze)
-                            .addComponent(pierwszelicznik))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(drugie)
-                            .addComponent(drugielicznik))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(trzecie)
-                            .addComponent(trzecielicznik))))
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(23, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(Wyślij)
-                        .addGap(47, 47, 47))))
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(26, 26, 26)
+                .addComponent(pierwszelicznik, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(84, Short.MAX_VALUE))
         );
+
+        jPanel1.add(jPanel2);
+        jPanel2.setBounds(310, 60, 120, 130);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -183,30 +182,31 @@ public class Okno extends javax.swing.JFrame {
         int licznik = 0;
         pom = Tekst.toCharArray();
         if (!Tekst.equals("")) {
-           //   System.out.println("Zdanie do obrobki:" + Tekst + "\n");
-            while (pom[licznik] == ' ' || pom[licznik] == '.' || pom[licznik] == ',' || pom[licznik] == '!' || pom[licznik] == '?'||pom[licznik] == '\n' ) {
-              licznik++;
-                if(licznik==Tekst.length())
+            //   System.out.println("Zdanie do obrobki:" + Tekst + "\n");
+            while (pom[licznik] == ' ' || pom[licznik] == '.' || pom[licznik] == ',' || pom[licznik] == '!' || pom[licznik] == '?' || pom[licznik] == '\n') {
+                licznik++;
+                if (licznik == Tekst.length()) {
                     return "";
-                
+                }
+
             }
           //  System.out.println("Licznik:" + licznik + "\n");
-            
-                for (int i = licznik; i < Tekst.length() - 1; i++) {
-                    if (pom[i] == ' ' || pom[i] == '.' || pom[i] == '?' || pom[i] == '!' || pom[i] == '\n') {
-                        if (pom[i + 1] == ' ' || pom[i + 1] == '.' || pom[i + 1] == '?' || pom[i + 1] == '!' || pom[i + 1] == '\n') {
-                        } else {
-                            nowyTekst = nowyTekst + pom[i];
-                        }
+
+            for (int i = licznik; i < Tekst.length() - 1; i++) {
+                if (pom[i] == ' ' || pom[i] == '.' || pom[i] == '?' || pom[i] == '!' || pom[i] == '\n') {
+                    if (pom[i + 1] == ' ' || pom[i + 1] == '.' || pom[i + 1] == '?' || pom[i + 1] == '!' || pom[i + 1] == '\n') {
                     } else {
                         nowyTekst = nowyTekst + pom[i];
                     }
+                } else {
+                    nowyTekst = nowyTekst + pom[i];
                 }
-            
+            }
+
             nowyTekst = nowyTekst + pom[Tekst.length() - 1];
           //  if (nowyTekst.charAt(nowyTekst.length() - 1) != ' ' || nowyTekst.charAt(nowyTekst.length() - 1) != '?' || nowyTekst.charAt(nowyTekst.length() - 1) != '!') {
-           //     nowyTekst = nowyTekst + ".";
-           // }
+            //     nowyTekst = nowyTekst + ".";
+            // }
             //System.out.println("COZWRACAM:"+nowyTekst+"+\n");
             return nowyTekst;
         } else {
@@ -229,11 +229,10 @@ public class Okno extends javax.swing.JFrame {
         return Zdanie;
     }
 
-    public static void Obrobka(String zdanie , int czyPlik) {
+    public static void Obrobka(String zdanie, int czyPlik) {
 
         // System.out.println("Zdanie:" + zdanie + "\n");
         //zdanie = poprawTekstWejsciowy(zdanie);
-
         //System.out.println("Popraawione:" + zdanie + "\n");
         int zdania = ileZdan(zdanie);
         //  System.out.println("ilezdan:"+zdania+"\n");
@@ -242,18 +241,18 @@ public class Okno extends javax.swing.JFrame {
             zdania = 1;
         }
         zdanie = duzeZnaki(zdanie);
-        if(czyPlik==0){
-        stan = stan + "\n" + "Ty:";
+        if (czyPlik == 0) {
+            stan = stan + "\n" + "Ty:";
         }
         for (int i = 0; i < zdania; i++) {
             pom = podzielWejscie(zdanie);
-            
+
             pom = poprawTekstWejsciowy(pom);
             pom = duzeZnaki(pom);
-          // System.out.println("POM:"+pom+"\n");
-            if(czyPlik==0){
-            stan = stan + pom;
-            wyjście.setText(stan);
+            // System.out.println("POM:"+pom+"\n");
+            if (czyPlik == 0) {
+                stan = stan + pom;
+                wyjście.setText(stan);
             }
             if (pom != " ") {
                 dodajDane(pom);
@@ -268,22 +267,22 @@ public class Okno extends javax.swing.JFrame {
     private void WyślijActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_WyślijActionPerformed
         zdanie = wejście.getText();
         wejście.setText("");
-     //   System.out.println("WEJSCIE:" + zdanie + "+" + "\n");
+        //   System.out.println("WEJSCIE:" + zdanie + "+" + "\n");
         zdanie = poprawTekstWejsciowy(zdanie);
-        cosNapisal = zdanie+" ";
-       // System.out.println("WEJSCIE:" + zdanie + "+" + "\n");
+        cosNapisal = zdanie + " ";
+        // System.out.println("WEJSCIE:" + zdanie + "+" + "\n");
         if (!zdanie.equals("")) {
-         //   System.out.println("Wszedłem");
-            Obrobka(zdanie,0);
+            //   System.out.println("Wszedłem");
+            Obrobka(zdanie, 0);
             zdanie = Generacja();
             // zdanie = poprawTekstWejsciowy(zdanie);
             stan = stan + "Karol:" + zdanie;
             wyjście.setText(stan);
         } else {
-            stan = stan + "\n"+"Karol:" + "Żyjesz?" + "\n";
+            stan = stan + "\n" + "Karol:" + "Żyjesz?" + "\n";
             wyjście.setText(stan);
         }
-       
+
     }//GEN-LAST:event_WyślijActionPerformed
 
     private void PlikActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PlikActionPerformed
@@ -347,6 +346,7 @@ public class Okno extends javax.swing.JFrame {
     public static javax.swing.JLabel drugie;
     public static javax.swing.JLabel drugielicznik;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     public static javax.swing.JLabel pierwsze;

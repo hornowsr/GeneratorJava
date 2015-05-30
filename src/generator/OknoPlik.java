@@ -116,7 +116,7 @@ public class OknoPlik extends JPanel implements ActionListener {
         //tekst = poprawTekstWejsciowy(tekst);
         
         tekst=tekst.substring(1, tekst.length());
-        System.out.println("Tekst:"+tekst+"\n");
+        //System.out.println("Tekst:"+tekst+"\n");
         Obrobka(tekst,1);
         //wyswietl();
     }

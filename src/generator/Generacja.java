@@ -8,9 +8,9 @@ package generator;
 import static generator.Okno.cosNapisal;
 import static generator.Okno.duzeZnaki;
 import static generator.Okno.poprawTekstWejsciowy;
+import static generator.Okno.wyjście;
 import static generator.Podział.Lista;
 import static generator.Statystyka.dodajDoStatystyk;
-import static generator.Statystyka.see;
 import static generator.Statystyka.setSlowo;
 import java.util.Random;
 
@@ -32,7 +32,7 @@ public class Generacja {
         int kiedy = 0;
         int start = 0;
         int j = 0;
-       // System.out.println("[rzedWYCIALEM:"+S+"\n");
+       //  System.out.println("[rzedWYCIALEM:"+S+"\n");
         while (kiedy < 3) {
             if (kiedy == 0) {
                 start++;
@@ -44,10 +44,10 @@ public class Generacja {
                 j++;
             }
         }
-       
-      //  System.out.println("START:"+start+"\n"+"STOP:"+j+"\n");
-        S = S.substring(start, j-1);
-      //  System.out.println("WYCIALEM:"+S+"\n");
+
+        //  System.out.println("START:"+start+"\n"+"STOP:"+j+"\n");
+        S = S.substring(start, j - 2);
+          System.out.println("WYCIALEM:"+S+"\n");
         return S;
 
     }
@@ -55,23 +55,27 @@ public class Generacja {
     public static String Generacja() {
         String Tekst = "";
         int numer;
+        String stan="";
         Random r = new Random();
-        int zmienTemat = Math.abs(r.nextInt() % 2);
-      //  System.out.println("ZMIENTEMAT:" + zmienTemat + "\n");
-        if (zmienTemat == 1) {
+        int zmienTemat = Math.abs(r.nextInt() % 3);
+         // System.out.println("ZMIENTEMAT:" + zmienTemat + "\n");
+        if (zmienTemat == 2) {
+            stan ="Karol:Zmieńmy temat.\n";
+            //wyjście.setText(stan);
             numer = Math.abs(r.nextInt()) % Lista.size();
             while (!Character.isUpperCase(Lista.get(numer).prefix.charAt(0))) {
                 numer = Math.abs(r.nextInt()) % Lista.size();
             }
         } else {
             cosNapisal = wytnij(cosNapisal);
-            cosNapisal = duzeZnaki(cosNapisal);
-            System.out.println("COSNAPISAL:" + cosNapisal + "+\n");
+            
+           //  System.out.println("COSNAPISAL:" + cosNapisal + "+\n");
             numer = znajdzPrefix(cosNapisal);
+            cosNapisal = duzeZnaki(cosNapisal);
         }
         String pom = Lista.get(numer).prefix;
         Tekst = pom;
-        //System.out.println("Wylosowano:" + pom + "+\n");
+       // System.out.println("Wylosowano:" + pom + "+\n");
         String nowaPom = "";
         int pomNumer = numer;
         // System.out.println("POCZATEK:"+pom+"\n");
@@ -100,7 +104,8 @@ public class Generacja {
         //see();
         setSlowo();
         //  System.out.println("WygenerowanoPozmianie:"+Tekst+"\n");
-        return Tekst;
+        stan = stan + Tekst;
+        return stan;
     }
 
     public static int znajdzPrefix(String Prefix) {

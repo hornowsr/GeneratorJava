@@ -11,6 +11,7 @@ public class Okno extends javax.swing.JFrame {
     public static String stan;
     public static String pom;
     public static String zdanie = "";
+    public static String cosNapisal;
 
     public Okno() {
         initComponents();
@@ -203,9 +204,10 @@ public class Okno extends javax.swing.JFrame {
                 }
             
             nowyTekst = nowyTekst + pom[Tekst.length() - 1];
-            if (nowyTekst.charAt(nowyTekst.length() - 1) != ' ' || nowyTekst.charAt(nowyTekst.length() - 1) != '?' || nowyTekst.charAt(nowyTekst.length() - 1) != '!') {
-                nowyTekst = nowyTekst + ".";
-            }
+          //  if (nowyTekst.charAt(nowyTekst.length() - 1) != ' ' || nowyTekst.charAt(nowyTekst.length() - 1) != '?' || nowyTekst.charAt(nowyTekst.length() - 1) != '!') {
+           //     nowyTekst = nowyTekst + ".";
+           // }
+            //System.out.println("COZWRACAM:"+nowyTekst+"+\n");
             return nowyTekst;
         } else {
             return "";
@@ -227,12 +229,12 @@ public class Okno extends javax.swing.JFrame {
         return Zdanie;
     }
 
-    public static void Obrobka(String zdanie) {
+    public static void Obrobka(String zdanie , int czyPlik) {
 
         // System.out.println("Zdanie:" + zdanie + "\n");
         //zdanie = poprawTekstWejsciowy(zdanie);
 
-        System.out.println("Popraawione:" + zdanie + "\n");
+        //System.out.println("Popraawione:" + zdanie + "\n");
         int zdania = ileZdan(zdanie);
         //  System.out.println("ilezdan:"+zdania+"\n");
         if (zdania == 0) {
@@ -240,13 +242,19 @@ public class Okno extends javax.swing.JFrame {
             zdania = 1;
         }
         zdanie = duzeZnaki(zdanie);
+        if(czyPlik==0){
         stan = stan + "\n" + "Ty:";
-
+        }
         for (int i = 0; i < zdania; i++) {
             pom = podzielWejscie(zdanie);
+            
+            pom = poprawTekstWejsciowy(pom);
             pom = duzeZnaki(pom);
+          // System.out.println("POM:"+pom+"\n");
+            if(czyPlik==0){
             stan = stan + pom;
             wyjście.setText(stan);
+            }
             if (pom != " ") {
                 dodajDane(pom);
 
@@ -260,18 +268,19 @@ public class Okno extends javax.swing.JFrame {
     private void WyślijActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_WyślijActionPerformed
         zdanie = wejście.getText();
         wejście.setText("");
-        System.out.println("WEJSCIE:" + zdanie + "+" + "\n");
+     //   System.out.println("WEJSCIE:" + zdanie + "+" + "\n");
         zdanie = poprawTekstWejsciowy(zdanie);
-        System.out.println("WEJSCIE:" + zdanie + "+" + "\n");
+        cosNapisal = zdanie+" ";
+       // System.out.println("WEJSCIE:" + zdanie + "+" + "\n");
         if (!zdanie.equals("")) {
-            System.out.println("Wszedłem");
-            Obrobka(zdanie);
+         //   System.out.println("Wszedłem");
+            Obrobka(zdanie,0);
             zdanie = Generacja();
             // zdanie = poprawTekstWejsciowy(zdanie);
             stan = stan + "Karol:" + zdanie;
             wyjście.setText(stan);
         } else {
-            stan = stan + "Karol:" + "Żyjesz?" + "\n";
+            stan = stan + "\n"+"Karol:" + "Żyjesz?" + "\n";
             wyjście.setText(stan);
         }
        

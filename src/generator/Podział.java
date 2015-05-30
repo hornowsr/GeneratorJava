@@ -82,7 +82,7 @@ public class Podział {
             ile = kiedyPrefix(podział);
             // System.out.println("Ile:"+ile);
             ile2 = ile;
-            for (int i = 0; i < ile; i++) {
+            for (int i = 0; i < ile-1; i++) {
                 gotowe = gotowe + podział[i];
             }
             while (ile2 < podział.length  && podział[ile2] != ' ') {
@@ -120,7 +120,7 @@ public class Podział {
             // System.out.println("\n" + "ile:" + k + " " + Lista.get(k).prefix + "sufix:"+ Lista.get(k).sufix);
         }
         }
-        wyswietl();
+        //wyswietl();
         //see();
         //System.out.println(Lista.get(0).prefix + "sufix:" + Lista.get(0).sufix);
     }

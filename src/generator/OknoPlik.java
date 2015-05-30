@@ -6,8 +6,10 @@
 package generator;
 
 import static generator.Okno.Obrobka;
+import static generator.Okno.poprawTekstWejsciowy;
 import static generator.Okno.setText;
 import static generator.Podział.dodajDane;
+import static generator.Podział.wyswietl;
 import java.awt.BorderLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
@@ -99,19 +101,23 @@ public class OknoPlik extends JPanel implements ActionListener {
         BufferedReader bufferReader = new BufferedReader(fileReader);
         String linia, tekst = "";
         while((linia = bufferReader.readLine()) != null) {
-            tekst = linia + " ";
+            tekst = tekst + " " +linia  ;
         }
         fileReader.close();
-        String nowy="";
-        char [] pom = new char[tekst.length()];
-        pom = tekst.toCharArray();
+       // String nowy="";
+     //   char [] pom = new char[tekst.length()];
+      //  pom = tekst.toCharArray();
        // System.out.println("Przed:"+tekst+"+"+"\n");
-        for(int i=0;i<tekst.length()-1;i++){
-            nowy = nowy + pom[i];
+       // for(int i=0;i<tekst.length()-1;i++){
+       //     nowy = nowy + pom[i];
          //   System.out.println("Tekst:"+nowy+"+"+"\n");
-        }
+     //   }
        // zdanie = nowy;
-        System.out.println("Tekst:"+nowy+"\n");
-        Obrobka(nowy);
+        //tekst = poprawTekstWejsciowy(tekst);
+        
+        tekst=tekst.substring(1, tekst.length());
+        System.out.println("Tekst:"+tekst+"\n");
+        Obrobka(tekst,1);
+        //wyswietl();
     }
 }

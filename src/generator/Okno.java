@@ -1,5 +1,6 @@
 package generator;
 
+import static generator.Generacja.Generacja;
 import static generator.Podział.dodajDane;
 import static generator.Podział.wyswietl;
 import static generator.Statystyka.setSlowo;
@@ -7,7 +8,7 @@ import java.util.ArrayList;
 
 public class Okno extends javax.swing.JFrame {
 
-    String stan;
+    public static String stan;
     public static String pom;
     public static String zdanie = "";
 
@@ -16,8 +17,13 @@ public class Okno extends javax.swing.JFrame {
 
         setLocationRelativeTo(null);
         wejście.addKeyListener(null);
-        stan = "KAROL:" + "Witaj." + "Jestem Karol." + "\n" + "Porozmawiajmy.";
-        setText(stan);
+        wejście.setText(null);
+        przywitanie();
+    }
+
+    public void przywitanie() {
+        stan = "KAROL:" + "Witaj." + "Jestem Karol." + "\n" + "Porozmawiajmy." + "\n";
+        wyjście.setText(stan);
     }
 
     @SuppressWarnings("unchecked")
@@ -175,28 +181,38 @@ public class Okno extends javax.swing.JFrame {
         String nowyTekst = "";
         int licznik = 0;
         pom = Tekst.toCharArray();
-        while (pom[licznik] == ' ' || pom[licznik] == '.' || pom[licznik] == ',' || pom[licznik] == '!' || pom[licznik] == '?') {
-            licznik++;
-        }
-        //System.out.println("Licznik:" + licznik + "\n");
-        for (int i = licznik; i < Tekst.length() - 1; i++) {
-            if (pom[i] == ' ' || pom[i] == '.' || pom[i] == '?' || pom[i] == '!'|| pom[i] == '\n') {
-                if (pom[i + 1] == ' ' || pom[i + 1] == '.' || pom[i + 1] == '?' || pom[i + 1] == '!'|| pom[i + 1] == '\n') {
-                } else {
-                    nowyTekst = nowyTekst + pom[i];
-                }
-            } else {
-                nowyTekst = nowyTekst + pom[i];
+        if (!Tekst.equals("")) {
+           //   System.out.println("Zdanie do obrobki:" + Tekst + "\n");
+            while (pom[licznik] == ' ' || pom[licznik] == '.' || pom[licznik] == ',' || pom[licznik] == '!' || pom[licznik] == '?'||pom[licznik] == '\n' ) {
+              licznik++;
+                if(licznik==Tekst.length())
+                    return "";
+                
             }
+          //  System.out.println("Licznik:" + licznik + "\n");
+            
+                for (int i = licznik; i < Tekst.length() - 1; i++) {
+                    if (pom[i] == ' ' || pom[i] == '.' || pom[i] == '?' || pom[i] == '!' || pom[i] == '\n') {
+                        if (pom[i + 1] == ' ' || pom[i + 1] == '.' || pom[i + 1] == '?' || pom[i + 1] == '!' || pom[i + 1] == '\n') {
+                        } else {
+                            nowyTekst = nowyTekst + pom[i];
+                        }
+                    } else {
+                        nowyTekst = nowyTekst + pom[i];
+                    }
+                }
+            
+            nowyTekst = nowyTekst + pom[Tekst.length() - 1];
+            if (nowyTekst.charAt(nowyTekst.length() - 1) != ' ' || nowyTekst.charAt(nowyTekst.length() - 1) != '?' || nowyTekst.charAt(nowyTekst.length() - 1) != '!') {
+                nowyTekst = nowyTekst + ".";
+            }
+            return nowyTekst;
+        } else {
+            return "";
         }
-        nowyTekst = nowyTekst + pom[Tekst.length() - 1];
-        if (nowyTekst.charAt(nowyTekst.length() - 1) != ' '||nowyTekst.charAt(nowyTekst.length() - 1) != '?'||nowyTekst.charAt(nowyTekst.length() - 1) != '!') {
-            nowyTekst = nowyTekst + ".";
-        }
-        return nowyTekst;
     }
 
-    public String duzeZnaki(String zdanie) {
+    public static String duzeZnaki(String zdanie) {
         String toLowerCase = zdanie.toLowerCase();
         char pomo[];
         pomo = toLowerCase.toCharArray();
@@ -207,43 +223,58 @@ public class Okno extends javax.swing.JFrame {
         for (int i = 1; i < pomo.length; i++) {
             Zdanie = Zdanie + pomo[i];
         }
-       // System.out.println("Duzeznaki:"+Zdanie+"\n");
+        // System.out.println("Duzeznaki:"+Zdanie+"\n");
         return Zdanie;
     }
 
-    private void WyślijActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_WyślijActionPerformed
-        zdanie = getText();
+    public static void Obrobka(String zdanie) {
 
-        zdanie = poprawTekstWejsciowy(zdanie);
+        // System.out.println("Zdanie:" + zdanie + "\n");
+        //zdanie = poprawTekstWejsciowy(zdanie);
 
-       //    System.out.println("Popraawione:"+zdanie+"\n");
+        System.out.println("Popraawione:" + zdanie + "\n");
         int zdania = ileZdan(zdanie);
-       //  System.out.println("ilezdan:"+zdania+"\n");
+        //  System.out.println("ilezdan:"+zdania+"\n");
         if (zdania == 0) {
             zdanie = zdanie + ".";
             zdania = 1;
         }
-       // zdanie = duzeZnaki(zdanie);
-        stan = stan + "\n" + "Ty:" ;
-        if (!zdanie.equals("") && !zdanie.equals("\n") && !zdanie.equals(".")) {
-            for (int i = 0; i < zdania; i++) {
-                pom = podzielWejscie(zdanie);
-                pom = duzeZnaki(pom);
-                stan = stan +  pom;
-                setText(stan);
-                if (pom != " ") {
-                    dodajDane(pom);
+        zdanie = duzeZnaki(zdanie);
+        stan = stan + "\n" + "Ty:";
 
-                }
-                zdanie = noweZdanie(zdanie);
+        for (int i = 0; i < zdania; i++) {
+            pom = podzielWejscie(zdanie);
+            pom = duzeZnaki(pom);
+            stan = stan + pom;
+            wyjście.setText(stan);
+            if (pom != " ") {
+                dodajDane(pom);
+
             }
-        } else {
-            stan = stan + "\n" + "Karol::" + "Żyjesz?";
-            setText(stan);
+            zdanie = noweZdanie(zdanie);
         }
-        stan = stan + "\n" ;
-        setText(stan);
-        // setSlowo();
+
+        stan = stan + "\n";
+        wyjście.setText(stan);
+    }
+    private void WyślijActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_WyślijActionPerformed
+        zdanie = wejście.getText();
+        wejście.setText("");
+        System.out.println("WEJSCIE:" + zdanie + "+" + "\n");
+        zdanie = poprawTekstWejsciowy(zdanie);
+        System.out.println("WEJSCIE:" + zdanie + "+" + "\n");
+        if (!zdanie.equals("")) {
+            System.out.println("Wszedłem");
+            Obrobka(zdanie);
+            zdanie = Generacja();
+            // zdanie = poprawTekstWejsciowy(zdanie);
+            stan = stan + "Karol:" + zdanie;
+            wyjście.setText(stan);
+        } else {
+            stan = stan + "Karol:" + "Żyjesz?" + "\n";
+            wyjście.setText(stan);
+        }
+       
     }//GEN-LAST:event_WyślijActionPerformed
 
     private void PlikActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PlikActionPerformed
@@ -291,12 +322,12 @@ public class Okno extends javax.swing.JFrame {
 
     public static String getText() {
         String Zdanie = wejście.getText();
-        wejście.setText("");
+        wejście.setText(null);
         return Zdanie;
     }
 
     public static void setText(String s) {
-        wyjście.setText(s);
+        zdanie = s;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

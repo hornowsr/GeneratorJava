@@ -74,7 +74,7 @@ public class Podział {
         
         podział = doPodziału.toCharArray();
         dlugosc = ileWyrazow(doPodziału);
-        dodajDoStatystyk(doPodziału);
+      //  dodajDoStatystyk(doPodziału);
         for (int k = 0; k < dlugosc - 2; k++) {
             gotowe = "";
             //   Słowa dodaj = new Słowa();
@@ -120,7 +120,7 @@ public class Podział {
             // System.out.println("\n" + "ile:" + k + " " + Lista.get(k).prefix + "sufix:"+ Lista.get(k).sufix);
         }
         }
-     //   wyswietl();
+        wyswietl();
         //see();
         //System.out.println(Lista.get(0).prefix + "sufix:" + Lista.get(0).sufix);
     }

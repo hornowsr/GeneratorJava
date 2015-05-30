@@ -5,6 +5,8 @@
  */
 package generator;
 
+import static generator.Okno.Obrobka;
+import static generator.Okno.setText;
 import static generator.Podział.dodajDane;
 import java.awt.BorderLayout;
 import java.awt.Insets;
@@ -108,6 +110,8 @@ public class OknoPlik extends JPanel implements ActionListener {
             nowy = nowy + pom[i];
          //   System.out.println("Tekst:"+nowy+"+"+"\n");
         }
-        dodajDane(nowy);
+       // zdanie = nowy;
+        System.out.println("Tekst:"+nowy+"\n");
+        Obrobka(nowy);
     }
 }

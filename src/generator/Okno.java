@@ -3,21 +3,25 @@ package generator;
 import static generator.Generacja.Generacja;
 import static generator.OknoPlik.wczytajPlik;
 import static generator.Podział.dodajDane;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
-import java.net.URL;
+import java.io.PrintWriter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Okno extends javax.swing.JFrame {
+   public static PrintWriter dane;
+ 
 
     public static String stan;
     public static String pom;
     public static String zdanie = "";
     public static String cosNapisal;
 
-    public Okno() {
+    public Okno() throws IOException {
         initComponents();
         setSize(450, 350);
         setVisible(true);
@@ -25,15 +29,23 @@ public class Okno extends javax.swing.JFrame {
         File plik = new File("Podstawa.txt");
         try {
                 wczytajPlik(plik);
-                System.out.println("Dodano do bazy.");
+             //   System.out.println("Dodano do bazy.");
             } catch (FileNotFoundException ex) {
                 Logger.getLogger(OknoPlik.class.getName()).log(Level.SEVERE, null, ex);
-                System.out.println("Błąd podczas dodawania do bazy.");
+            //    System.out.println("Błąd podczas dodawania do bazy.");
             } catch (IOException ex) {
                 Logger.getLogger(OknoPlik.class.getName()).log(Level.SEVERE, null, ex);
-                System.out.println("Błąd podczas dodawania do bazy.");
+              //  System.out.println("Błąd podczas dodawania do bazy.");
             }
-        
+       try {
+           
+            dane=new PrintWriter(new BufferedWriter(new FileWriter("Podstawa.txt",true)));
+           System.out.println("Dodano do bazy.");
+       } catch (FileNotFoundException ex) {
+           Logger.getLogger(Okno.class.getName()).log(Level.SEVERE, null, ex);
+       }
+       
+       
         //setLocationRelativeTo(null);
         setResizable(false);
         setLocationRelativeTo(null);
@@ -69,6 +81,11 @@ public class Okno extends javax.swing.JFrame {
         pierwszelicznik = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                Zamknij(evt);
+            }
+        });
 
         jPanel1.setLayout(null);
 
@@ -175,7 +192,18 @@ public class Okno extends javax.swing.JFrame {
         }
         return ileZdan;
     }
-
+    public static int ileSlow(String doPodziału) {
+        char[] podział = new char[doPodziału.length()];
+        podział = doPodziału.toCharArray();
+        int ileSlow = 0;
+        for (int i = 0; i < doPodziału.length(); i++) {
+            if (podział[i] == '.' || podział[i] == '!' || podział[i] == '?'|| podział[i] == ' ') {
+                ileSlow++;
+            }
+        }
+      //  ileSlow++;
+        return ileSlow;
+    }
     public static String poprawTekstWejsciowy(String Tekst) {//usowanie wielu spacji kropek itd.
         char[] pom = new char[Tekst.length()];
         String nowyTekst = "";
@@ -269,17 +297,25 @@ public class Okno extends javax.swing.JFrame {
         wejście.setText("");
         //   System.out.println("WEJSCIE:" + zdanie + "+" + "\n");
         zdanie = poprawTekstWejsciowy(zdanie);
+        dane.println(zdanie);
+        //System.out.println("WEJSCIE:" + zdanie + "+" + "\n");
+       
         cosNapisal = zdanie + " ";
+         int ileSlow = ileSlow(cosNapisal);
+        System.out.println("ILESLOW:"+ileSlow+"\n");
+        if(ileSlow >=4){
         // System.out.println("WEJSCIE:" + zdanie + "+" + "\n");
         if (!zdanie.equals("")) {
             //   System.out.println("Wszedłem");
             Obrobka(zdanie, 0);
             zdanie = Generacja();
-            // zdanie = poprawTekstWejsciowy(zdanie);
+            zdanie = duzeZnaki(zdanie);
+            dane.println(zdanie);
+             
             stan = stan + "Karol:" + zdanie;
             wyjście.setText(stan);
-        } else {
-            stan = stan + "\n" + "Karol:" + "Żyjesz?" + "\n";
+        } }else {
+            stan = stan + "\n" + "Karol:" + "Może ułożyłbyś jakieś bardziej złożone zdanie?" + "\n";
             wyjście.setText(stan);
         }
 
@@ -292,6 +328,10 @@ public class Okno extends javax.swing.JFrame {
     private void wejścieKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_wejścieKeyPressed
 
     }//GEN-LAST:event_wejścieKeyPressed
+
+    private void Zamknij(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_Zamknij
+      dane.close();
+    }//GEN-LAST:event_Zamknij
 
     public static String noweZdanie(String zdanie) {
         int licznik = 0;
